@@ -10,29 +10,30 @@ import org.apache.storm.tuple.Fields;
 import org.apache.storm.tuple.Tuple;
 import org.apache.storm.tuple.Values;
 
-public class SplitSentenceBolt extends BaseRichBolt {
+public class SplitBolt extends BaseRichBolt {
 
 	private OutputCollector collector;
-	
+
 	@Override
 	public void execute(Tuple tuple) {
-		String sentence=tuple.getStringByField("sentence");
-		String[] words=sentence.split(" ");
-		for(String word:words){
+		String sentence = tuple.getStringByField("sentence");
+		String[] words = sentence.split(" ");
+		for (String word : words) {
 			this.collector.emit(new Values(word));
 		}
 	}
 
 	@Override
-	public void prepare(Map arg0, TopologyContext arg1, OutputCollector collector) {
-	this.collector=collector;
-		
+	// Used for Initialization
+	public void prepare(Map map, TopologyContext context, OutputCollector collector) {
+		this.collector = collector;
+
 	}
 
 	@Override
 	public void declareOutputFields(OutputFieldsDeclarer declarer) {
 		declarer.declare(new Fields("word"));
-		
+
 	}
 
 }
