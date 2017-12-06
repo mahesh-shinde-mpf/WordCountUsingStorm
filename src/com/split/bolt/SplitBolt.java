@@ -14,6 +14,7 @@ public class SplitBolt extends BaseRichBolt {
 
 	private OutputCollector collector;
 
+	//Process A single tuple of input
 	@Override
 	public void execute(Tuple tuple) {
 		String sentence = tuple.getStringByField("sentence");
@@ -23,8 +24,8 @@ public class SplitBolt extends BaseRichBolt {
 		}
 	}
 
-	@Override
 	// Used for Initialization
+	@Override
 	public void prepare(Map map, TopologyContext context, OutputCollector collector) {
 		this.collector = collector;
 
